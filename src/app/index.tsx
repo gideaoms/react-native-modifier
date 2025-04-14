@@ -1,5 +1,5 @@
-import {Provider} from '../modifier'
-import {Title} from "@/src/components/title";
+import { Provider } from '../modifier'
+import { Title } from "../components/title";
 
 export default function Page() {
   return (

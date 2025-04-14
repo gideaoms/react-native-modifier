@@ -1,38 +1,12 @@
-import { createContext, ReactNode, useContext } from "react";
-import { useColorScheme } from "react-native";
+import { defineConfig } from "./react-native-modifier";
 
-type Modifier = {
-  color: { 
-    red?: string; 
-    blue?: string; 
-    dark: { 
-      red?: string; 
-      blue?: string 
-    } 
-  };
-};
-
-const Context = createContext<Modifier>(null!);
-
-declare namespace Provider {
-  type Props = {
-    children: ReactNode;
-  };
-}
-
-export function Provider(props: Provider.Props) {
-  const colorScheme = useColorScheme();
-  const color = {
-    red: colorScheme === "light" ? "red" : undefined,
-    blue: colorScheme === "light" ? "blue" : undefined,
+export const { Provider, useModifier } = defineConfig((schema) => ({
+  color: {
+    red: schema === "light" ? "red" : undefined,
+    blue: schema === "light" ? "blue" : undefined,
     dark: {
-      red: colorScheme === "dark" ? "yellow" : undefined,
-      blue: colorScheme === "dark" ? "green" : undefined,
+      red: schema === "dark" ? "yellow" : undefined,
+      blue: schema === "dark" ? "green" : undefined,
     },
-  };
-  return <Context.Provider value={{ color }}>{props.children}</Context.Provider>;
-}
-
-export function useModifier() {
-  return useContext(Context);
-}
+  },
+}));
